@@ -1,7 +1,7 @@
 package bank.Acount.kata;
 
 /**
- * IdentifiantCompte identifiant d'un compte bancaire
+ *  gestion de l'identification d'un compte bancaire
  * @author yayandaw95@gmail.com 22/04/2022
  */
 public final class IdentifiantCompte {

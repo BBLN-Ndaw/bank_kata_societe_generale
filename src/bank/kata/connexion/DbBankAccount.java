@@ -8,6 +8,7 @@ import java.sql.SQLException;
 /**
  * Implémentation  d'un singleton  pour la connexion à la base de donnée
  * L'instance est créée à l'initialisation.
+ * @author yayandaw95@gmail.com
  */
 public final class DbBankAccount {
 
@@ -41,6 +42,7 @@ public final class DbBankAccount {
     {
         return DbBankAccountInstance;
     }
+    public Connection GetConnexion(){return d_connexion;}
 
 
     /**
@@ -55,5 +57,5 @@ public final class DbBankAccount {
         }
     }
     */
-    
+
 }
