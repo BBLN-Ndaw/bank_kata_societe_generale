@@ -8,14 +8,15 @@ import java.math.BigDecimal;
  */
 public abstract class CompteBancaire {
     private IdentifiantCompte d_identifiantCompteBancaire;
-    private BigDecimal d_solde;
+    private double d_solde;
     private String d_dateCreaationCompte;
+
 
     /**
      * Permet d'obtenir le solde du compte
      * @return d_solde le solde du compte
      */
-    public BigDecimal GetSolde()
+    public double GetSolde()
     {
         return d_solde;
     }
@@ -36,6 +37,19 @@ public abstract class CompteBancaire {
     public  IdentifiantCompte GetidentifiantCompte()
     {
         return d_identifiantCompteBancaire;
+    }
+
+    public void setidentifiantCompteBancaire(IdentifiantCompte identifiantCompte)
+    {
+        this.d_identifiantCompteBancaire=identifiantCompte;
+    }
+    public void setSolde(double solde)
+    {
+        this.d_solde=solde;
+    }
+    public void setDateCreaationCompte(String dateCreaationCompte)
+    {
+        this.d_dateCreaationCompte=dateCreaationCompte;
     }
 
 }
