@@ -1,0 +1,1 @@
+# bank_kata_societe_generale
