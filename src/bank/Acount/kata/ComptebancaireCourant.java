@@ -1,14 +1,10 @@
 package bank.Acount.kata;
 
-import bank.Acount.kata.DAO.OperationBancaireDAO;
 import bank.Acount.kata.Exceptions.MontantNegatifException;
 import bank.Acount.kata.Exceptions.RetraitImpossibleException;
 import bank.Acount.kata.DAO.CompteCourantDAO;
 
 import java.sql.SQLException;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 public final class  ComptebancaireCourant extends  CompteBancaire{
@@ -49,6 +45,8 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         return d_debitMax;
     }
 
+
+
     public  void setTotalDecouvertAutoriser(double totalDecouvertAutoriser)
     {
         this.d_totalDecouvertAutoriser=totalDecouvertAutoriser;
@@ -68,12 +66,17 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
 
     }
 
-
+    @Override
+    public void enregistrerCompte() {
+        new CompteCourantDAO().creer(this);
+    }
     @Override
     public Boolean RetraitPossible(double montant) {
-        if(this.d_totalDecouvertAutoriser>=montant ||(montant<=super.GetSolde()&&montant <=GetDebitMax()&&this.d_totalDecouvertAutoriser>=montant))
-             return true;
-        return false;
+            double retraitSolde=super.GetSolde()-montant;
+            if(retraitSolde<=GetTotalDecouvertAutoriser()&&GetDebitMax()>=montant)
+                return true;
+            return false;
+
     }
 
     @Override
@@ -82,21 +85,12 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         if(montant<0)
             throw new MontantNegatifException("Le montant ne peut pas être negatif");
        if(RetraitPossible( montant)==false)
-           throw new RetraitImpossibleException("le Vous ne pouvez pas faire de retrait");
-        double soldecourant=super.GetSolde();
-       if(this.d_totalDecouvertAutoriser<=montant)
-       {
-           //jje veux retirer 100, je suis à zero de solde et j'ai un decouvert de 100
-           //ya le sodle courant qui entre en jeux aussi
-           //if(solde - montant >= 0) {
-           //solde = solde - montant;
-           //}
-
-       }
-
-       soldecourant-=montant;
-       super.setSolde(soldecourant);
+           throw new RetraitImpossibleException("Vous ne pouvez pas faire de retrait");
+        setSolde(GetSolde()-montant);
+        //mis à jours du solde dans la base de donnée
+        new CompteCourantDAO().updateSolde(GetSolde()-montant);
        ///enregistrer l'operation
+        enregistrerTransaction(montant,GetSolde(), "debit");
     }
 
     @Override
@@ -106,8 +100,10 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
        double soldeCourant=super.GetSolde();
        soldeCourant+=montant;
         super.setSolde(soldeCourant);
+        //mis à jours du solde dans la base de donnée
+        new CompteCourantDAO().updateSolde(soldeCourant);
         //enregistrerOperation
-        enregistrerTransaction(montant,"Credit");
+        enregistrerTransaction(montant, GetSolde(), "Credit");
     }
 
     @Override

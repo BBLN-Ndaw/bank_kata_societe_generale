@@ -70,7 +70,7 @@ public abstract class Client {
         }
     }
 
-
+    public abstract void enregistrerClient();
     public abstract int GetIdClient();
     public abstract void setIdClient(int id);
     public abstract void AfficherClient();

@@ -1,5 +1,6 @@
 package bank.Acount.kata;
 
+import bank.Acount.kata.DAO.CompteCourantDAO;
 import bank.Acount.kata.Exceptions.CrediterCompteImpossibleException;
 import bank.Acount.kata.Exceptions.MontantNegatifException;
 import bank.Acount.kata.Exceptions.RetraitImpossibleException;
@@ -24,6 +25,7 @@ public final class CompteBancaireEpargne extends  CompteBancaire{
         super(idcompte,solde,dateCreation,client);
         this.d_tauxInteret=Tauxinteret;
         this.d_plafondMaxDepotAutorise=plafond;
+        enregistrerCompte();
     }
 
     public double GetTauxInteret()
@@ -44,14 +46,28 @@ public final class CompteBancaireEpargne extends  CompteBancaire{
     }
 
     @Override
-    public Boolean RetraitPossible(double montant) {
-       // if(montant<=super.GetSolde()&&montant <=super.GetDebitMax())
-            return true;
-       // return false;
+    public void enregistrerCompte() {
+        new CompteBancaireEpargneDAO().creer(this);
     }
+
+    @Override
+    public Boolean RetraitPossible(double montant) {
+        if(GetSolde()-montant>0&&GetDebitMax()>=montant&&montant>0)
+            return true;
+        return false;
+    }
+
     @Override
     public void debiter(double montant) throws MontantNegatifException, RetraitImpossibleException {
-
+        if(montant<0)
+            throw  new MontantNegatifException("Le montant ne peut pas être négatif");
+        if(RetraitPossible(montant)==false)
+            throw new RetraitImpossibleException("Vous ne pouvez pas faire de retrait");
+        setSolde(GetSolde()-montant);
+        //mis à jours du solde dans la base de donnée
+        new CompteBancaireEpargneDAO().updateSolde(GetSolde()-montant);
+        ///enregistrer l'operation
+        enregistrerTransaction(montant,GetSolde(), "debit");
     }
     @Override
     public void crediter(double montant) throws MontantNegatifException,CrediterCompteImpossibleException {
@@ -62,9 +78,18 @@ public final class CompteBancaireEpargne extends  CompteBancaire{
         if(soldeCourant>this.GetPlafond())
             throw  new CrediterCompteImpossibleException("Le plafond est atteint");
         super.setSolde(soldeCourant);
+        //Mis à jour du sole
+        new CompteBancaireEpargneDAO().updateSolde(soldeCourant);
         //enregistrer Operation
-        enregistrerTransaction(montant,"Credit");
+        enregistrerTransaction(montant, GetSolde(), "Credit");
 
+    }
+    public void ajouterInteret()
+    {
+        double interet=this.GetSolde()*this.GetTauxInteret();
+        this.setSolde(this.GetSolde()+interet);
+        //Mis à jour du solde dans la base de donnée
+        new CompteBancaireEpargneDAO().updateSolde(this.GetSolde()+interet);
     }
 
     @Override

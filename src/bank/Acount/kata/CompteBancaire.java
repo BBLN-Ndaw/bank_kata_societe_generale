@@ -91,14 +91,13 @@ public abstract class CompteBancaire {
         this.d_client.AfficherClient();
     }
 
-    public  void enregistrerTransaction(double montant, String typeTransaction)
+    public  void enregistrerTransaction(double montant, double soldeCourant, String typeTransaction)
     {
         Date date = new Date();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss")
                 .withZone(ZoneId.systemDefault());
         String dateOperation = format.format(date.toInstant());
         OperationBancaire operationBancaire =new OperationBancaire(this.GetClient(),this,dateOperation,montant,typeTransaction);
-        operationBancaire.Afficher();
         try {
             new OperationBancaireDAO().creer(operationBancaire);
         } catch (SQLException e) {
@@ -106,6 +105,7 @@ public abstract class CompteBancaire {
         }
     }
 
+    public abstract void enregistrerCompte();
     public abstract void afficherCOmpte();
 
     public  abstract Boolean RetraitPossible(double montant);
@@ -113,6 +113,7 @@ public abstract class CompteBancaire {
     public abstract void crediter(double montant) throws MontantNegatifException, CrediterCompteImpossibleException;
     public abstract List<OperationBancaire> getHistorique();
     public abstract void AfficheHistorique();
+
 
 
 

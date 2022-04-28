@@ -1,5 +1,8 @@
 package bank.Acount.kata;
 
+import bank.Acount.kata.DAO.ParticulierDAO;
+import bank.Acount.kata.DAO.entrepriseDAO;
+
 public final class entreprise extends Client {
     private int d_siret;
     private String d_raisonSocial;
@@ -18,11 +21,18 @@ public final class entreprise extends Client {
         this.d_siret=siret;
         this.d_raisonSocial=raisonSocial;
         this.d_codeNaf=codeNaf;
+        enregistrerClient();
     }
     public String GetraisonSocial()
     {
         return d_raisonSocial;
     }
+    @Override
+    public void enregistrerClient() {
+        //Enregistrement du client dans la base de donnée.
+        new entrepriseDAO().creer(this);
+    }
+
     @Override
     public int GetIdClient()
     {
@@ -52,11 +62,11 @@ public final class entreprise extends Client {
     public  void AfficherClient()
     {
         System.out.println("------------Affichage du client (Entreprise)------------------");
-        System.out.println("------------Numero Siret de l'entreprise : "+this.GetIdClient()+"------------------");
-        System.out.println("------------Raison social de l'entreprise : "+this.GetraisonSocial()+"------------------");
-        System.out.println("------------Code NAF de l'entreprise : "+this.GetCodeNaf()+"------------------");
-        System.out.println("------------Adresse de l'entreprise : "+this.GetAdresse()+"------------------");
-        System.out.println("------------Numero telephone de l'entreprise : "+this.GetNumerotelephone()+"------------------");
+        System.out.println("Numero Siret de l'entreprise : "+this.GetIdClient()+"------------------");
+        System.out.println("Raison social de l'entreprise : "+this.GetraisonSocial()+"------------------");
+        System.out.println("Code NAF de l'entreprise : "+this.GetCodeNaf()+"------------------");
+        System.out.println("Adresse de l'entreprise : "+this.GetAdresse()+"------------------");
+        System.out.println("Numero telephone de l'entreprise : "+this.GetNumerotelephone()+"------------------");
 
 
     }

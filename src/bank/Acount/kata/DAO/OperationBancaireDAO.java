@@ -57,8 +57,10 @@ public class OperationBancaireDAO implements OperationBancaireDAOInterface {
             Statement = d_Operationconnexion.createStatement();
             String sql = "insert into operation values('"+operationBancaire.getClient().GetIdClient()+"','"+operationBancaire.getCompte().GetIdCompte()+"','"+
                     operationBancaire.getDateOperation()+"','"+operationBancaire.getTypeOperation()+"','"+operationBancaire.getMontantantOperation()+"')";
-           operationBancaire.Afficher();
             Statement.execute(sql);
+
+            System.out.println("Operation reussit ");
+
         } catch (SQLException e) {
             System.out.println("Erreur dans la creation de l'operation : ");
             e.printStackTrace();

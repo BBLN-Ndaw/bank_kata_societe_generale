@@ -116,6 +116,27 @@ public class CompteBancaireEpargneDAO extends DAO<CompteBancaireEpargne> {
         return compteBancaireEpargne;
     }
 
+    public void updateSolde(double solde)
+    {
+        Connection connexion = null;
+        Statement Statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connexion= this.d_connexionDAO;
+            Statement = connexion.createStatement();
+            String sql="update compteepargne set solde = '"+solde+"'";
+            Statement.execute(sql);
+            System.out.println("Solde mis a jour");
+
+        } catch (SQLException e) {
+            System.out.println("Erreur dans la mise à jour du solde : ");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Erreur dans la mise à jour du solde : ");
+            e.getMessage();
+        }
+    }
 
     @Override
     public List<CompteBancaireEpargne> GetListe()

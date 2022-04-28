@@ -152,7 +152,27 @@ public class CompteCourantDAO extends DAO<ComptebancaireCourant> {
         return ComptebancaireCourantList;
 
     }
+    public void updateSolde(double solde)
+    {
+        Connection connexion = null;
+        Statement Statement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connexion= this.d_connexionDAO;
+            Statement = connexion.createStatement();
+            String sql="update comptecourants set solde = '"+solde+"'";
+            Statement.execute(sql);
+            System.out.println("Solde mis a jour");
+
+        } catch (SQLException e) {
+            System.out.println("Erreur dans la mise à jour du solde : ");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Erreur dans la mise à jour du solde : ");
+            e.getMessage();
+        }
+    }
     public List<OperationBancaire> GetHistorique(ComptebancaireCourant compteBancaire) throws SQLException
     {
         List<OperationBancaire> operationBancaireList = new ArrayList<OperationBancaire>();

@@ -100,7 +100,6 @@ public class entrepriseDAO extends DAO<entreprise> {
                         compteBancaireEpargne.setDateCreaationCompte(resultSet.getString("dateCreation"));
                         compteBancaireEpargne.setTauxInteret(resultSet.getDouble("tauxInteret"));
                         compteBancaireEpargne.setPlafond(resultSet.getDouble("plafond"));
-                        System.out.println("okk");
                         if (compteBancaireEpargne != null) {
                             entreprise.ajouterCompter(compteBancaireEpargne);
                             System.out.println("compte epargne ajouté");

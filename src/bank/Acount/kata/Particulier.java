@@ -1,5 +1,7 @@
 package bank.Acount.kata;
 
+import bank.Acount.kata.DAO.ParticulierDAO;
+
 /**
  * Gestion d'un client particulier
  */
@@ -18,6 +20,7 @@ package bank.Acount.kata;
         this.d_dateNaissance="";
     }
 
+
     public Particulier(String adresse, String numTel, int cni, String nom, String prenom, String dateNaissance)
     {
         super(adresse,numTel);
@@ -25,6 +28,7 @@ package bank.Acount.kata;
         this.d_nom=nom;
         this.d_prenom=prenom;
         this.d_dateNaissance=dateNaissance;
+        enregistrerClient();
     }
     public String GetNom()
     {
@@ -49,6 +53,12 @@ package bank.Acount.kata;
     public void setdateNaissance(String dateNaissance)
     {
         d_dateNaissance=dateNaissance;
+    }
+
+    @Override
+    public void enregistrerClient() {
+        //Enregistrement du client dans la base de donnée.
+        new ParticulierDAO().creer(this);
     }
 
     @Override
