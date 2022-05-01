@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object pour l'interaction entre un compte bancaire epargne et la base de données
+ * @author yayandaw95@gmail.com
+ */
 public class CompteBancaireEpargneDAO extends DAO<CompteBancaireEpargne> {
 
     @Override
@@ -116,6 +120,10 @@ public class CompteBancaireEpargneDAO extends DAO<CompteBancaireEpargne> {
         return compteBancaireEpargne;
     }
 
+    /**
+     * met à jour le solde du compte epargne suite à une transaction
+     * @param solde
+     */
     public void updateSolde(double solde)
     {
         Connection connexion = null;
@@ -138,6 +146,10 @@ public class CompteBancaireEpargneDAO extends DAO<CompteBancaireEpargne> {
         }
     }
 
+    /**
+     * permet d'otenir la liste de toutes les comptes epargnes.
+     * @return List<CompteBancaireEpargne>
+     */
     @Override
     public List<CompteBancaireEpargne> GetListe()
     {
@@ -171,6 +183,12 @@ public class CompteBancaireEpargneDAO extends DAO<CompteBancaireEpargne> {
 
     }
 
+    /**
+     * Donne la liste de toutes les opérations bancaires realisées sur le compte epargne.
+     * @param compteBancaireEpargne
+     * @return
+     * @throws SQLException
+     */
     public List<OperationBancaire> GetHistorique(CompteBancaireEpargne compteBancaireEpargne) throws SQLException
     {
         List<OperationBancaire> operationBancaireList = new ArrayList<OperationBancaire>();

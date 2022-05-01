@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Modele d'acces au données DAO
- * @param <T>
+ * @param <T> type générique (utilisées pour les differents types d'objet pouvez interagir avec la base de données)
  * @author yayandaw95@gmail.com
  */
 public abstract class  DAO<T> {
@@ -25,6 +25,11 @@ public abstract class  DAO<T> {
      * @return
      */
     public  abstract void creer(T obj);
-    public abstract List<T>GetListe();
+
+ /**
+  * Donne une liste de T
+  * @return List<T>
+  */
+ public abstract List<T>GetListe();
 
 }

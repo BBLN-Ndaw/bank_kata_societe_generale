@@ -10,14 +10,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Data Access Objet des opertions bancaires
+ * @author  yayandaw95@gmail.com
+ */
 public class OperationBancaireDAO implements OperationBancaireDAOInterface {
     private static Connection d_Operationconnexion;
 
+    /**
+     * Constructeur par defaut
+     */
     public OperationBancaireDAO()
     {
         d_Operationconnexion=DbBankAccount.GetDbBankAccountInstance().GetConnexion();
     }
 
+    /**
+     * Recherche une operation bancaire dans la base de données
+     * @param client
+     * @param compteBancaire
+     * @return
+     * @throws SQLException
+     */
     @Override
     public OperationBancaire rechercher(Client client, CompteBancaire compteBancaire) throws SQLException
     {
@@ -50,6 +64,11 @@ public class OperationBancaireDAO implements OperationBancaireDAOInterface {
 
     }
 
+    /**
+     * Enregistre une operation bancaire dans la base de données
+     * @param operationBancaire
+     * @throws SQLException
+     */
     @Override
     public void creer(OperationBancaire operationBancaire) throws SQLException {
         Statement Statement = null;

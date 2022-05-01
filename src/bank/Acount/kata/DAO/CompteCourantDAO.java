@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data ACCess object pour l'interaction entre la base de données et les comptes bancaires courants.
+ * @author yayandaw95@gmail.com
+ */
 public class CompteCourantDAO extends DAO<ComptebancaireCourant> {
 
     /**
@@ -121,6 +125,10 @@ public class CompteCourantDAO extends DAO<ComptebancaireCourant> {
         return comptebancaireCourant;
     }
 
+    /**
+     * Permet d'obtenir la liste de tous les comptes bancaires courants de la banque
+     * @return List<ComptebancaireCourant>
+     */
     @Override
     public List<ComptebancaireCourant> GetListe() {
         List<ComptebancaireCourant> ComptebancaireCourantList = new ArrayList<ComptebancaireCourant>();
@@ -152,6 +160,11 @@ public class CompteCourantDAO extends DAO<ComptebancaireCourant> {
         return ComptebancaireCourantList;
 
     }
+
+    /**
+     * Met à jour le solde suite à une operations bancaire
+     * @param solde
+     */
     public void updateSolde(double solde)
     {
         Connection connexion = null;
@@ -173,6 +186,13 @@ public class CompteCourantDAO extends DAO<ComptebancaireCourant> {
             e.getMessage();
         }
     }
+
+    /**
+     * Permet d'obtneir la liste de toutes les operations bancaires réalisées sur le compte bancaire courant
+     * @param compteBancaire
+     * @return List<OperationBancaire>
+     * @throws SQLException
+     */
     public List<OperationBancaire> GetHistorique(ComptebancaireCourant compteBancaire) throws SQLException
     {
         List<OperationBancaire> operationBancaireList = new ArrayList<OperationBancaire>();

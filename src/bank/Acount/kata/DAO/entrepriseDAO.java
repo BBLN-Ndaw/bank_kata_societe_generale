@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+/**
+ * Data acces objet d'un client(entreprise)
+ * @author yayandaw95@gmail.com
+ */
 public class entrepriseDAO extends DAO<entreprise> {
     /**
      * Creation et enregistrement d'un client (entreprise) dans la base de donnée.
@@ -38,6 +42,10 @@ public class entrepriseDAO extends DAO<entreprise> {
         }
     }
 
+    /**
+     * Recherhce la liste des clients(entreprise) enregistrés dans la base de données.
+     * @return
+     */
     @Override
     public List<entreprise> GetListe() {
         return null;

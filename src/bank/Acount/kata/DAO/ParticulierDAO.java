@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+/**
+ * Data Acces Objet d'un client (particulier)
+ * @author  yayandaw95@gmail.com
+ */
 public class ParticulierDAO extends DAO<Particulier>  {
     /**
      * Creation et enregistrement d'un client dans la base de donnée.

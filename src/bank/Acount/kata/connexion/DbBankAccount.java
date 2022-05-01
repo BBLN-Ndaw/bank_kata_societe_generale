@@ -19,6 +19,9 @@ public final class DbBankAccount {
     /** Instance unique pré-initialisée */
     private static DbBankAccount DbBankAccountInstance =new  DbBankAccount();
 
+    /**
+     * Constructeur par defaut
+     */
     private  DbBankAccount()
     {
         try
@@ -38,24 +41,14 @@ public final class DbBankAccount {
         }
     }
 
+    /**
+     * Permet de récuperer l'unique instance de la base de données
+     * @return
+     */
     public static DbBankAccount GetDbBankAccountInstance()
     {
         return DbBankAccountInstance;
     }
     public Connection GetConnexion(){return d_connexion;}
-
-
-    /**
-     * exécute une requête sql
-     * @param sqlStatement chaine contenant la requete à exécuter
-     */
-   /* public void executeStatement(String sqlStatement) {
-        try {
-            stmt.execute(sqlStatement);
-        } catch (Exception e) {
-            System.out.println("Probleme d'exécution de la requête : " + e.getMessage());
-        }
-    }
-    */
 
 }

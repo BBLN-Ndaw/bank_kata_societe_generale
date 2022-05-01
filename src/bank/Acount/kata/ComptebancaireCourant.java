@@ -7,12 +7,19 @@ import bank.Acount.kata.DAO.CompteCourantDAO;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Classe de gestion d'un compte bancaires courant
+ * @author yayandaw95@gmail.com
+ */
 public final class  ComptebancaireCourant extends  CompteBancaire{
     private  double d_tauxAgios;
     private double d_totalDecouvertAutoriser;
    private CompteCourantDAO d_compteCourantDAO= new CompteCourantDAO();
     private  static double d_debitMax=15000.99;
 
+    /**
+     * Compte bancaire courant
+     */
     public ComptebancaireCourant()
     {
         super();
@@ -20,9 +27,15 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         this.d_tauxAgios=0;
     }
 
-
-
-
+    /**
+     * Initialise un compte bancaire courant
+     * @param idcompte
+     * @param solde
+     * @param dateCreation
+     * @param client
+     * @param agios
+     * @param decouverte
+     */
     public ComptebancaireCourant(int idcompte,double solde, String dateCreation, Client client,double agios, double decouverte)
     {
         super(idcompte,solde,dateCreation,client);
@@ -32,30 +45,55 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
 
     }
 
+    /**
+     * Permet de savoir le montant total de decouverte autorisé
+     * @return d_totalDecouvertAutoriser
+     */
     public double GetTotalDecouvertAutoriser()
     {
         return d_totalDecouvertAutoriser;
     }
+
+    /**
+     * Permet d'obtenir le taux d'agios appliqués sur le compte
+     * @return d_tauxAgios
+     */
     public double GetAgios()
     {
         return d_tauxAgios;
     }
+
+    /**
+     * Permet d'obtenir le montant total de debit autorisé
+     * @return d_debitMax
+     */
     public double GetDebitMax()
     {
         return d_debitMax;
     }
 
 
-
+    /**
+     * Change le nombre total de découverte autorisé
+     * @param totalDecouvertAutoriser
+     */
     public  void setTotalDecouvertAutoriser(double totalDecouvertAutoriser)
     {
         this.d_totalDecouvertAutoriser=totalDecouvertAutoriser;
     }
+
+    /**
+     * Ajoute le taux d'agios
+     * @param tauxAgios
+     */
     public void setTauxAgios(double tauxAgios)
     {
         this.d_tauxAgios=tauxAgios;
     }
 
+    /**
+     * Affiche sur la console le compte bancaire courant
+     */
     @Override
     public void afficherCOmpte() {
         System.out.println("--------------------- Affichage du compte courant numero : "+super.GetIdCompte()+" -------------------");
@@ -66,10 +104,19 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
 
     }
 
+    /**
+     * Enregistre le compte dans la base de données
+     */
     @Override
     public void enregistrerCompte() {
         new CompteCourantDAO().creer(this);
     }
+
+    /**
+     * Vérifie si le retrait est possible
+     * @param montant
+     * @return true si le retrait est possible et false sinon
+     */
     @Override
     public Boolean RetraitPossible(double montant) {
             double retraitSolde=super.GetSolde()-montant;
@@ -79,6 +126,12 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
 
     }
 
+    /**
+     * Permet de retirer un montant sur le compte bancaire courant.
+     * @param montant
+     * @throws MontantNegatifException
+     * @throws RetraitImpossibleException
+     */
     @Override
     public void debiter(double montant)throws MontantNegatifException, RetraitImpossibleException
     {
@@ -93,6 +146,11 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         enregistrerTransaction(montant,GetSolde(), "debit");
     }
 
+    /**
+     * Permet de rajouter de l'argent sur le compte bancaire courant
+     * @param montant
+     * @throws MontantNegatifException
+     */
     @Override
     public void crediter(double montant) throws MontantNegatifException {
         if(montant<0)
@@ -106,6 +164,10 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         enregistrerTransaction(montant, GetSolde(), "Credit");
     }
 
+    /**
+     *  Permet d'obtenir l'historique de toutes les opérations bancaires réalisées sur le compte
+     *   @return List<OperationBancaire> la liste de toutes les operations bancaires sur le compte
+     */
     @Override
     public List<OperationBancaire> getHistorique() {
         if(d_compteCourantDAO!=null)
@@ -122,14 +184,15 @@ public final class  ComptebancaireCourant extends  CompteBancaire{
         return null;//exception lancé
     }
 
+    /**
+     * Affiche sur la console la liste de toutes les opérations.
+     */
     @Override
     public void AfficheHistorique() {
         for (OperationBancaire operationBancaire:this.getHistorique())
         {
             operationBancaire.Afficher();
         }
-
     }
-
 
 }
